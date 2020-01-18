@@ -1,7 +1,6 @@
 {
   "name": "dotenv-aws-mfa",
   "description": "Helps to maintain MFA token in dotenv file",
-  "version": "0.0.4",
   "main": "dist/index.js",
   "bin": "dist/index.js",
   "license": "MIT",
@@ -70,5 +69,6 @@
   },
   "contributors": [
     "Kamaz <kamaz@xsimple.org>"
-  ]
+  ],
+  "version": "0.0.5-0"
 }

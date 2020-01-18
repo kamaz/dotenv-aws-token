@@ -13,7 +13,8 @@ jobs:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm install --no-save
-      - run: npm version from-git
+      - run: git describe --tags
+      - run: npm --no-git-tag-version version $(git describe --tags)
       # Publish to npm
       - run: npm publish --access public
         env:

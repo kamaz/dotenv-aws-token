@@ -1,9 +1,9 @@
 {
   "name": "dotenv-aws-mfa",
   "description": "Helps to maintain MFA token in dotenv file",
-  "version": "0.0.5-0",
-  "main": "lib/index.js",
-  "bin": "lib/index.js",
+  "version": "0.0.4",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prerelease": "git-authors-cli && git add .",
+    "semantic-release": "semantic-release",
     "release": "standard-version -a",
     "prepublishOnly": "npm run build"
   },
@@ -50,6 +51,7 @@
     "git-authors-cli": "^1.0.18",
     "git-cz": "^4.1.0",
     "jest": "^24.9.0",
+    "semantic-release": "^16.0.2",
     "standard-version": "^7.0.1",
     "ts-jest": "^24.3.0",
     "ts-node": "^8.6.2",

@@ -1,18 +1,36 @@
 {
   "name": "dotenv-aws-mfa",
-  "version": "0.0.1-alpha",
+  "description": "Helps to maintain MFA token in dotenv file",
+  "version": "0.0.4-alpha.1",
   "main": "lib/index.js",
   "bin": "lib/index.js",
   "license": "MIT",
   "repository": {
+    "type": "git",
     "url": "https://github.com/kamaz/dotenv-aws-mfa"
   },
+  "bugs": {
+    "url": "https://github.com/kamaz/dotenv-aws-mfa/issues"
+  },
+  "keywords": [
+    "aws",
+    "token",
+    "mfa",
+    "authentication",
+    "dotenv",
+    "nodejs",
+    "profile"
+  ],
   "scripts": {
+    "commit": "git-cz",
     "build": "tsc",
     "watch": "tsc -w",
     "dev": "ts-node src/index.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prerelease": "git-authors-cli && git add .",
+    "release": "standard-version -a",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "aws-sdk": "^2.604.0",
@@ -29,9 +47,26 @@
     "@types/node": "^13.1.7",
     "@types/ramda": "^0.26.39",
     "@types/rc": "^1.1.0",
+    "git-authors-cli": "^1.0.18",
+    "git-cz": "^4.1.0",
     "jest": "^24.9.0",
+    "standard-version": "^7.0.1",
     "ts-jest": "^24.3.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
-  }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "contributors": [
+    "Kamaz <kamaz@xsimple.org>"
+  ]
 }

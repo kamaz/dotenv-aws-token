@@ -13,8 +13,7 @@ jobs:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm install
-      - run: npm run release -- --prerelease alpha
-      - run: git push --follow-tags origin master
+      - run: npm version from-git
       # Publish to npm
       - run: npm publish --access public
         env:

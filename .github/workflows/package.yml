@@ -1,29 +1,14 @@
-name: Package
+name: Release
 on:
-  release:
-    types: [created]
+  push:
+    # branches to consider in the event; optional, defaults to all
+    branches:
+      - master
 jobs:
-  build:
+  update_release_draft:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm install
-      - run: npm build
-      # Publish to npm
-      - run: npm publish --access public
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: release-drafter/release-drafter@v5
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v1
-        with:
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@octocat' # Defaults to the user or organization that owns the workflow file
-      # Publish to GitHub Packages
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

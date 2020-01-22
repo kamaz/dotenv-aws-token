@@ -29,13 +29,14 @@ DAM_ACCOUNT="replace_aws_account_number"
 ```
 
 4. Use the token
-   - By typing the command
+
+- By typing the command
 
 ```bash
 dotenv-aws-mfa -t <token>
 ```
 
-    - By being asked
+- By being asked
 
 ```bash
 dotenv-aws-mfa

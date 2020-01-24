@@ -6,7 +6,6 @@ import { updateAWSCredentials } from "../src/update-aws-credentials";
 
 describe("Update aws credentials", () => {
   it("with profile", async () => {
-    console.log(process.cwd());
     const dotEnvFile = join(process.cwd(), ".env");
     //@ts-ignore
     aws.setKeys({

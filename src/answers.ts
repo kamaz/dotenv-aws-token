@@ -1,7 +1,9 @@
 import program from "yargs";
 import { pickAll, prop, map, filter, compose, mergeWith } from "ramda";
 
-export const getAnswers = () => {
+// replace console.log with logging framework
+
+export const getAnswers = (argv: Array<string>) => {
   // console.log(process.cwd()); add as debug
   const userOption = {
     name: "user",
@@ -39,8 +41,9 @@ export const getAnswers = () => {
     }
   ];
   const pickOnlyOptions = pickAll(map(prop("name"))(questions));
-  const argv: object = pickOnlyOptions(
-    program
+
+  const argvAnswers: object = pickOnlyOptions(
+    program(argv)
       .usage("Usage:")
       .option("u", {
         alias: userOption.name,
@@ -73,7 +76,7 @@ export const getAnswers = () => {
   // console.log("arguments", argv);
   // console.log("env variables", envVars);
   const definedValue = (a: unknown, b: unknown) => (a === undefined ? b : a);
-  const givenAnswers = mergeWith(definedValue, envVars, argv);
+  const givenAnswers = mergeWith(definedValue, argvAnswers, envVars);
   // console.log("partial answer", partialAnswers);
   const isAnswered = (property: string) => {
     // console.log(partialAnswers, property);

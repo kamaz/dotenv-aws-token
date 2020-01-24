@@ -6,7 +6,7 @@ import { merge } from "ramda";
 import { updateAWSCredentials, Authentication } from "./update-aws-credentials";
 import { getAnswers } from "./answers";
 
-const { missingAnswers, givenAnswers } = getAnswers();
+const { missingAnswers, givenAnswers } = getAnswers(process.argv);
 
 inquirer.prompt(missingAnswers).then(async userAnswers => {
   const finalAnswers = merge(givenAnswers)(userAnswers) as Authentication;

@@ -12,21 +12,16 @@ export type Authentication = {
 };
 
 export const updateAWSCredentials = async (authentication: Authentication) => {
-  const {
-    account = "795006049798",
-    user = "kamil@cabiri.io",
-    token,
-    profile = "default"
-  } = authentication;
+  const { account, user, token, profile = "default" } = authentication;
   const credentials = new aws.SharedIniFileCredentials({
-    profile
+    profile,
   });
   aws.config.credentials = credentials;
   const sts = new aws.STS();
   const sessionTokenPayload = {
     DurationSeconds: 43200,
     SerialNumber: `arn:aws:iam::${account}:mfa/${user}`,
-    TokenCode: token
+    TokenCode: token,
   };
   const tokenResponse = await sts
     .getSessionToken(sessionTokenPayload)
@@ -47,10 +42,13 @@ export const updateAWSCredentials = async (authentication: Authentication) => {
   )({
     AWS_ACCESS_KEY_ID: awsAccessValues.AccessKeyId,
     AWS_SECRET_ACCESS_KEY: awsAccessValues.SecretAccessKey,
-    AWS_SESSION_TOKEN: awsAccessValues.SessionToken
+    AWS_SESSION_TOKEN: awsAccessValues.SessionToken,
+    DAM_USER: user,
+    DAM_ACCOUNT: account,
+    DAM_PROFILE: profile,
   });
 
   writeFileSync(joinPath(process.cwd(), ".env"), newDotEnvValues, {
-    encoding: "utf-8"
+    encoding: "utf-8",
   });
 };

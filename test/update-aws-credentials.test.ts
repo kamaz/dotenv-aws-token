@@ -11,7 +11,7 @@ describe("Update aws credentials", () => {
     aws.setKeys({
       AccessKeyIdValue: "key",
       SecretAccessKeyValue: "secret",
-      SessionTokenValue: "token"
+      SessionTokenValue: "token",
     });
     writeFileSync(
       dotEnvFile,
@@ -20,7 +20,7 @@ AWS_SECRET_ACCESS_KEY="TZnnmsmsYseyC5io9hJIkCxh13mqwYWa/vaetnMo"
 AWS_SESSION_TOKEN="FwoGZXIvYXdzEAcaDIHwLivlg2VGUaqINyKGAUBAWZoV96oA2yeSe9kQSEg7OSkHdVwn5FPJ5s/GiNTCZ+o/srvYIEWeuDwOhHzfRWmIbcmmFHlRuKoySLMx8Jg2tEUUbZTuYmpbBWS/9tdgGuNhSy/mKlvYiNipsdL13/6EhLG8A47arV9R9ysVNWPpUV2Q3Cx7G1CzqrH6hDEZvFE2l9HOKJSO/vAFMijQE/ASeQF8u0ycr/8U+VK2LtCw5VMIxM6YIVhSzzhVcbZOw4yiUiJa"
 TEST=true`,
       {
-        encoding: "utf-8"
+        encoding: "utf-8",
       }
     );
 
@@ -28,7 +28,7 @@ TEST=true`,
       account: "1234",
       profile: "cabiri",
       token: "token",
-      user: "kamil@cabiri.io"
+      user: "kamil@cabiri.io",
     });
 
     //@ts-ignore
@@ -38,7 +38,10 @@ TEST=true`,
       .toBe(`AWS_ACCESS_KEY_ID=key
 AWS_SECRET_ACCESS_KEY=secret
 AWS_SESSION_TOKEN=token
-TEST=true`);
+TEST=true
+DAM_USER=kamil@cabiri.io
+DAM_ACCOUNT=1234
+DAM_PROFILE=cabiri`);
   });
 
   it("with default profile", async () => {
@@ -47,7 +50,7 @@ TEST=true`);
     aws.setKeys({
       AccessKeyIdValue: "key",
       SecretAccessKeyValue: "secret",
-      SessionTokenValue: "token"
+      SessionTokenValue: "token",
     });
     writeFileSync(
       dotEnvFile,
@@ -56,14 +59,14 @@ AWS_SECRET_ACCESS_KEY="TZnnmsmsYseyC5io9hJIkCxh13mqwYWa/vaetnMo"
 AWS_SESSION_TOKEN="FwoGZXIvYXdzEAcaDIHwLivlg2VGUaqINyKGAUBAWZoV96oA2yeSe9kQSEg7OSkHdVwn5FPJ5s/GiNTCZ+o/srvYIEWeuDwOhHzfRWmIbcmmFHlRuKoySLMx8Jg2tEUUbZTuYmpbBWS/9tdgGuNhSy/mKlvYiNipsdL13/6EhLG8A47arV9R9ysVNWPpUV2Q3Cx7G1CzqrH6hDEZvFE2l9HOKJSO/vAFMijQE/ASeQF8u0ycr/8U+VK2LtCw5VMIxM6YIVhSzzhVcbZOw4yiUiJa"
 TEST=true`,
       {
-        encoding: "utf-8"
+        encoding: "utf-8",
       }
     );
 
     await updateAWSCredentials({
       account: "1234",
       token: "token",
-      user: "kamil@cabiri.io"
+      user: "kamil@cabiri.io",
     });
 
     //@ts-ignore
@@ -73,6 +76,9 @@ TEST=true`,
       .toBe(`AWS_ACCESS_KEY_ID=key
 AWS_SECRET_ACCESS_KEY=secret
 AWS_SESSION_TOKEN=token
-TEST=true`);
+TEST=true
+DAM_USER=kamil@cabiri.io
+DAM_ACCOUNT=1234
+DAM_PROFILE=default`);
   });
 });

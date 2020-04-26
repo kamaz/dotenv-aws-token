@@ -7,38 +7,38 @@ export const getAnswers = (argv: Array<string>) => {
   // console.log(process.cwd()); add as debug
   const userOption = {
     name: "user",
-    message: "IAM user name"
+    message: "IAM user name",
   };
   const tokenOption = {
     name: "token",
-    message: "MFA token"
+    message: "MFA token",
   };
   const accountOption = {
     name: "account",
-    message: "AWS account number"
+    message: "AWS account number",
   };
   const profileOption = {
     name: "profile",
-    message: "AWS credential profile"
+    message: "AWS credential profile",
   };
 
   const questions = [
     {
       type: "input",
-      ...userOption
+      ...userOption,
     },
     {
       type: "input",
-      ...tokenOption
+      ...accountOption,
     },
     {
       type: "input",
-      ...accountOption
+      ...profileOption,
     },
     {
       type: "input",
-      ...profileOption
-    }
+      ...tokenOption,
+    },
   ];
   const pickOnlyOptions = pickAll(map(prop("name"))(questions));
 
@@ -48,29 +48,29 @@ export const getAnswers = (argv: Array<string>) => {
       .option("u", {
         alias: userOption.name,
         describe: userOption.message,
-        type: "string"
+        type: "string",
       })
       .option("a", {
         alias: accountOption.name,
         describe: accountOption.message,
-        type: "string"
+        type: "string",
       })
       .option("t", {
         alias: tokenOption.name,
         describe: tokenOption.message,
-        type: "string"
+        type: "string",
       })
       .option("p", {
         alias: profileOption.name,
         describe: profileOption.message,
-        type: "string"
+        type: "string",
       }).argv
   );
 
   const envVars = {
     [userOption.name]: process.env.DAM_USER,
     [accountOption.name]: process.env.DAM_ACCOUNT,
-    [profileOption.name]: process.env.AWS_PROFILE
+    [profileOption.name]: process.env.DAM_PROFILE,
   };
 
   // console.log("arguments", argv);

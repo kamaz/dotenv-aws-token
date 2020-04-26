@@ -8,11 +8,13 @@ import { getAnswers } from "./answers";
 
 const { missingAnswers, givenAnswers } = getAnswers(process.argv);
 
-inquirer.prompt(missingAnswers).then(async userAnswers => {
+inquirer.prompt(missingAnswers).then(async (userAnswers) => {
   const finalAnswers = merge(givenAnswers)(userAnswers) as Authentication;
   const dotEnvFilePath = joinPath(process.cwd(), ".env");
   if (existsSync(dotEnvFilePath)) {
-    updateAWSCredentials(finalAnswers);
+    updateAWSCredentials(finalAnswers).catch((e) => {
+      console.error("Error: ", e.message);
+    });
   } else {
     console.error(`Dot env file is missing under ${process.cwd()}`);
     process.exit(1);

@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.604.0",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "dotenv": "^8.2.0",
     "inquirer": "^7.0.3",
     "ramda": "^0.27.0",

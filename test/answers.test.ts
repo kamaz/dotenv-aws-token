@@ -32,6 +32,7 @@ describe("questions to ask", () => {
       account: undefined,
       profile: undefined,
       token: undefined,
+      role: "",
     });
   });
 
@@ -49,6 +50,7 @@ describe("questions to ask", () => {
       account: "dam_account",
       profile: "aws_profile",
       token: undefined,
+      role: "",
     });
   });
 
@@ -60,6 +62,7 @@ describe("questions to ask", () => {
         account: "dam_account",
         profile: "aws_profile",
         token: undefined,
+        role: "",
       },
       missingAnswers: [{ type: "input", name: "token", message: "MFA token" }],
     },
@@ -70,6 +73,7 @@ describe("questions to ask", () => {
         account: "dam_account",
         profile: "aws_profile",
         token: undefined,
+        role: "",
       },
       missingAnswers: [{ type: "input", name: "token", message: "MFA token" }],
     },
@@ -80,6 +84,7 @@ describe("questions to ask", () => {
         account: "account",
         profile: "aws_profile",
         token: undefined,
+        role: "",
       },
       missingAnswers: [{ type: "input", name: "token", message: "MFA token" }],
     },
@@ -90,6 +95,7 @@ describe("questions to ask", () => {
         account: "account",
         profile: "aws_profile",
         token: undefined,
+        role: "",
       },
       missingAnswers: [{ type: "input", name: "token", message: "MFA token" }],
     },
@@ -100,6 +106,7 @@ describe("questions to ask", () => {
         account: "dam_account",
         profile: "profile",
         token: undefined,
+        role: "",
       },
       missingAnswers: [{ type: "input", name: "token", message: "MFA token" }],
     },
@@ -110,6 +117,7 @@ describe("questions to ask", () => {
         account: "dam_account",
         profile: "profile",
         token: undefined,
+        role: "",
       },
       missingAnswers: [{ type: "input", name: "token", message: "MFA token" }],
     },
@@ -120,6 +128,7 @@ describe("questions to ask", () => {
         account: "dam_account",
         profile: "aws_profile",
         token: "token",
+        role: "",
       },
       missingAnswers: [],
     },
@@ -130,6 +139,7 @@ describe("questions to ask", () => {
         account: "dam_account",
         profile: "aws_profile",
         token: "token",
+        role: "",
       },
       missingAnswers: [],
     },

@@ -1,35 +1,68 @@
-import aws from "aws-sdk";
+import aws, { STS } from "aws-sdk";
 import { config } from "dotenv";
 import { join, pickAll, merge, compose, toPairs, map } from "ramda";
 import { writeFileSync } from "fs";
 import { join as joinPath } from "path";
 import os from "os";
+import { debug } from "./debug";
+
 export type Authentication = {
   account: string;
   user: string;
   token: string;
   profile?: string;
+  role?: string;
 };
 
-export const updateAWSCredentials = async (authentication: Authentication) => {
-  const { account, user, token, profile = "default" } = authentication;
+const getCredentials = async (
+  authentication: Authentication
+): Promise<STS.Credentials | undefined> => {
+  const {
+    account,
+    user,
+    token,
+    profile = "default",
+    role = "",
+  } = authentication;
   const credentials = new aws.SharedIniFileCredentials({
     profile,
   });
   aws.config.credentials = credentials;
-  const sts = new aws.STS();
+  const sts = new STS();
   const sessionTokenPayload = {
     DurationSeconds: 43200,
     SerialNumber: `arn:aws:iam::${account}:mfa/${user}`,
     TokenCode: token,
   };
+  if (role && role != "") {
+    const assumeRoleToken = await sts
+      .assumeRole({
+        ...sessionTokenPayload,
+        // todo: that value can be configured
+        DurationSeconds: 3600,
+        RoleArn: role,
+        RoleSessionName: `${account}-${user}`,
+      })
+      .promise();
+    debug("assume role token response %j", assumeRoleToken);
+    return assumeRoleToken.Credentials;
+  }
+
   const tokenResponse = await sts
     .getSessionToken(sessionTokenPayload)
     .promise();
 
+  debug("session token response %j", tokenResponse);
+  return tokenResponse.Credentials;
+};
+
+export const updateAWSCredentials = async (authentication: Authentication) => {
+  const { account, user, profile = "default" } = authentication;
+  const credentials = await getCredentials(authentication);
+
   const awsAccessValues = pickAll(
     ["AccessKeyId", "SecretAccessKey", "SessionToken"],
-    tokenResponse.Credentials
+    credentials
   ) as { AccessKeyId: string; SecretAccessKey: string; SessionToken: string };
 
   const dotEnvValues = config().parsed || {};

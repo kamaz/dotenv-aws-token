@@ -37,6 +37,12 @@ dotenv-aws-mfa
 dotenv-aws-mfa -t <token>
 ```
 
+## Something is not right
+
+```bash
+DEBUG=dotenv-aws-mfa dotenv-aws-mfa -t <token>
+```
+
 ## Under the hood
 
 ### Order of precedence

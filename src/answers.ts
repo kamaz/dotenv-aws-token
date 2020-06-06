@@ -23,14 +23,11 @@ export const getAnswers = (argv: Array<string>) => {
 
   const roleOption = {
     name: "role",
-    message: "AWS role to assume",
+    message: "AWS role to assume (Optional)",
+    default: "",
   };
 
   const questions = [
-    {
-      type: "input",
-      ...roleOption,
-    },
     {
       type: "input",
       ...userOption,
@@ -42,6 +39,10 @@ export const getAnswers = (argv: Array<string>) => {
     {
       type: "input",
       ...profileOption,
+    },
+    {
+      type: "input",
+      ...roleOption,
     },
     {
       type: "input",
@@ -90,12 +91,14 @@ export const getAnswers = (argv: Array<string>) => {
 
   debug("argument %o", argvAnswers);
   debug("environment variables %o", envVars);
-  const definedValue = (a: unknown, b: unknown) => (a === undefined ? b : a);
+  const definedValue = (a: unknown, b: unknown) =>
+    a === undefined || a === "" ? b : a;
   const givenAnswers = mergeWith(definedValue, argvAnswers, envVars);
   debug("partial answers %o", givenAnswers);
 
   const isAnswered = (property: string) => {
-    return givenAnswers[property] === undefined;
+    // at the moment we want to ignore 'role'
+    return givenAnswers[property] === undefined && property !== roleOption.name;
   };
 
   debug("questions to ask %o", questions);
@@ -104,6 +107,8 @@ export const getAnswers = (argv: Array<string>) => {
     // @ts-ignore
     compose(isAnswered, prop("name"))
   )(questions);
+
+  debug("missing answers %o", questions);
 
   return { missingAnswers, givenAnswers };
 };

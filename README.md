@@ -1,4 +1,4 @@
-# Why
+# Why
 
 Because switching between AWS credentials is annoying with mfa.
 
@@ -37,7 +37,7 @@ dotenv-aws-mfa
 dotenv-aws-mfa -t <token>
 ```
 
-## Something is not right
+## Something is not right
 
 ```bash
 DEBUG=dotenv-aws-mfa dotenv-aws-mfa -t <token>
@@ -45,7 +45,7 @@ DEBUG=dotenv-aws-mfa dotenv-aws-mfa -t <token>
 
 ## Under the hood
 
-### Order of precedence
+### Order of precedence
 
 1. Environment variables
 2. Arguments

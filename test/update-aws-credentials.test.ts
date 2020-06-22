@@ -29,6 +29,7 @@ TEST=true`,
       profile: "cabiri",
       token: "token",
       user: "kamil@cabiri.io",
+      sessionDuration: "3600",
     });
 
     //@ts-ignore
@@ -67,6 +68,7 @@ TEST=true`,
       account: "1234",
       token: "token",
       user: "kamil@cabiri.io",
+      sessionDuration: "3600",
     });
 
     //@ts-ignore

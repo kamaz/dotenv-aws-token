@@ -4,18 +4,22 @@ import { debug } from "./debug";
 
 export const getAnswers = (argv: Array<string>) => {
   debug("running in context %s", process.cwd());
+
   const userOption = {
     name: "user",
     message: "IAM user name",
   };
+
   const tokenOption = {
     name: "token",
     message: "MFA token",
   };
+
   const accountOption = {
     name: "account",
     message: "AWS account number",
   };
+
   const profileOption = {
     name: "profile",
     message: "AWS credential profile",
@@ -23,8 +27,14 @@ export const getAnswers = (argv: Array<string>) => {
 
   const roleOption = {
     name: "role",
-    message: "AWS role to assume (Optional)",
+    message: "AWS role to assume (optional)",
     default: "",
+  };
+
+  const sessionDurationOption = {
+    name: "sessionDuration",
+    message: "AWS session duration (optional)",
+    default: "3600",
   };
 
   const questions = [
@@ -49,7 +59,13 @@ export const getAnswers = (argv: Array<string>) => {
       ...tokenOption,
     },
   ];
-  const pickOnlyOptions = pickAll(map(prop("name"))(questions));
+  const pickOnlyOptions = pickAll(
+    map(prop("name"))([
+      ...questions,
+      { name: roleOption.name },
+      { name: sessionDurationOption.name },
+    ])
+  );
 
   const argvAnswers: object = pickOnlyOptions(
     program(argv)
@@ -79,17 +95,24 @@ export const getAnswers = (argv: Array<string>) => {
         alias: profileOption.name,
         describe: profileOption.message,
         type: "string",
+      })
+      .option("d", {
+        alias: sessionDurationOption.name,
+        describe: sessionDurationOption.message,
+        type: "string",
+        default: sessionDurationOption.default,
       }).argv
   );
+  debug("arguments %o", argvAnswers);
 
   const envVars = {
     [userOption.name]: process.env.DAM_USER,
     [accountOption.name]: process.env.DAM_ACCOUNT,
     [profileOption.name]: process.env.DAM_PROFILE,
     [roleOption.name]: process.env.DAM_ROLE,
+    [sessionDurationOption.name]: process.env.DAM_SESSION_DURATION,
   };
 
-  debug("argument %o", argvAnswers);
   debug("environment variables %o", envVars);
   const definedValue = (a: unknown, b: unknown) =>
     a === undefined || a === "" ? b : a;
@@ -98,7 +121,11 @@ export const getAnswers = (argv: Array<string>) => {
 
   const isAnswered = (property: string) => {
     // at the moment we want to ignore 'role'
-    return givenAnswers[property] === undefined && property !== roleOption.name;
+    return (
+      givenAnswers[property] === undefined &&
+      property !== roleOption.name &&
+      property !== sessionDurationOption.name
+    );
   };
 
   debug("questions to ask %o", questions);

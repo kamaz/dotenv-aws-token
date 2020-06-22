@@ -45,6 +45,15 @@ DEBUG=dotenv-aws-mfa dotenv-aws-mfa -t <token>
 
 ## Under the hood
 
+### Environment variables
+
+| Name        | Description                           |
+| ----------- | ------------------------------------- |
+| DAM_USER    | your AWS login username               |
+| DAM_ACCOUNT | your AWS account number               |
+| DAM_PROFILE | profile configured in AWS credentials |
+| DAM_ROLE    | a role                                |
+
 ### Order of precedence
 
 1. Environment variables
@@ -56,6 +65,6 @@ DEBUG=dotenv-aws-mfa dotenv-aws-mfa -t <token>
 To install locally just run:
 
 ```bash
-yarn build; yarn global add ${PWD}
+yarn build; yarn global add $(pwd)
 dotenv-aws-mfa
 ```

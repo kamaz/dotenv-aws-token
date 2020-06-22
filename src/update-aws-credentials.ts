@@ -12,6 +12,7 @@ export type Authentication = {
   token: string;
   profile?: string;
   role?: string;
+  sessionDuration: string;
 };
 
 const getCredentials = async (
@@ -23,6 +24,7 @@ const getCredentials = async (
     token,
     profile = "default",
     role = "",
+    sessionDuration,
   } = authentication;
   const credentials = new aws.SharedIniFileCredentials({
     profile,
@@ -39,7 +41,7 @@ const getCredentials = async (
       .assumeRole({
         ...sessionTokenPayload,
         // todo: that value can be configured
-        DurationSeconds: 3600,
+        DurationSeconds: parseInt(sessionDuration, 10) ?? 3600,
         RoleArn: role,
         RoleSessionName: `${account}-${user}`,
       })

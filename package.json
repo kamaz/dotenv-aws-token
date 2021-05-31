@@ -51,7 +51,7 @@
     "@types/rc": "^1.1.0",
     "git-authors-cli": "^1.0.18",
     "git-cz": "^4.1.0",
-    "jest": "^25.1.0",
+    "jest": "^27.0.3",
     "semantic-release": "^17.0.7",
     "standard-version": "^8.0.0",
     "ts-jest": "^26.1.0",
